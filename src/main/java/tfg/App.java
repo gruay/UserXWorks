@@ -1,10 +1,12 @@
 package tfg;
 
+import com.opensymphony.xwork2.ActionSupport;
+
 /**
  * Hello world!
  *
  */
-public class App 
+public class App extends ActionSupport
 {
     public static void main( String[] args )
     {
