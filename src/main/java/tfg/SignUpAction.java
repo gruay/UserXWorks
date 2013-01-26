@@ -19,6 +19,17 @@ public class SignUpAction extends ActionSupport {
 	private String password;
 	private String uTwitter;
 	
+	public void validate() {
+		if (username.length() == 0) {
+			addFieldError("username", "User Name is required");
+		} 
+		if (password.length() == 0) {
+			addFieldError("password", "Password is required");
+		}
+		if (uTwitter.length() == 0) {
+			addFieldError("uTwitter", "Twitter username is required");
+		}
+	}
 	
 	public String getHostDB() {
 		return hostDB;
