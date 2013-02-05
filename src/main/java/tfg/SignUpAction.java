@@ -17,17 +17,13 @@ public class SignUpAction extends ActionSupport {
 	private DB db;
 	private String username;
 	private String password;
-	private String uTwitter;
 	
 	public void validate() {
 		if (username.length() == 0) {
-			addFieldError("username", "User Name is required");
+			addFieldError("username", "Username is required");
 		} 
 		if (password.length() == 0) {
 			addFieldError("password", "Password is required");
-		}
-		if (uTwitter.length() == 0) {
-			addFieldError("uTwitter", "Twitter username is required");
 		}
 	}
 	
@@ -69,16 +65,6 @@ public class SignUpAction extends ActionSupport {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
-
-	public String getuTwitter() {
-		return uTwitter;
-	}
-
-
-	public void setuTwitter(String uTwitter) {
-		this.uTwitter = uTwitter;
-	}
 	
 
 	@Override
@@ -86,12 +72,13 @@ public class SignUpAction extends ActionSupport {
 		MongoClient m = new MongoClient(hostDB, port);
 		db = m.getDB(Global.DB_TFG);
 		DBCollection coll = db.getCollection(Global.C_USERS);
-		BasicDBObject q = new BasicDBObject(Global.A_USER, username);
+		coll.setObjectClass(User.class);
+		BasicDBObject q = new BasicDBObject(Global.A_USERNAME, username);
 		if (coll.find(q).hasNext()) {
 			addActionError("Ja existeix un usuari amb aquest nom.");
 			return "error";
 		}
-		coll.insert(new BasicDBObject(Global.A_USER, username).append(Global.A_PASSWORD, password).append(Global.A_TWITTER, uTwitter));
+		coll.insert(new BasicDBObject(Global.A_USERNAME, username).append(Global.A_PASSWORD, password));
 		return "success";
 	}
 
