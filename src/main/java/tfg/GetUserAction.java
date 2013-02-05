@@ -16,10 +16,19 @@ public class GetUserAction extends ActionSupport {
 	private int port;
 	private DB db;
 	private String username;
+	private User user;
 	
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
 	public void validate() {
 		if (username.length() == 0) {
-			addFieldError("username", "User Name is required");
+			addFieldError("username", "Username is required");
 		} 
 	}
 	
@@ -56,12 +65,13 @@ public class GetUserAction extends ActionSupport {
 		MongoClient m = new MongoClient(hostDB, port);
 		db = m.getDB(Global.DB_TFG);
 		DBCollection coll = db.getCollection(Global.C_USERS);
-		BasicDBObject q = new BasicDBObject(Global.A_USER, username);
+		coll.setObjectClass(User.class);
+		BasicDBObject q = new BasicDBObject(Global.A_USERNAME, username);
 		if (!coll.find(q).hasNext()) {
 			addActionError("No existeix cap usuari amb aquest username");
 			return "error";
 		}
-		//D'alguna manera carrego el resultat
+		user = (User) coll.find(q).next();
 		return "success";
 	}
 }
