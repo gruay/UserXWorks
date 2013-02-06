@@ -6,15 +6,15 @@ import com.mongodb.DBCollection;
 import com.mongodb.MongoClient;
 import com.opensymphony.xwork2.ActionSupport;
 
-public class GetUserAction extends ActionSupport {
+public class GetUserAction extends DBAction {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private String hostDB;
+	/*private String hostDB;
 	private int port;
-	private DB db;
+	private DB db;*/
 	private String username;
 	private User user;
 	
@@ -32,7 +32,7 @@ public class GetUserAction extends ActionSupport {
 		} 
 	}
 	
-	public String getHostDB() {
+	/*public String getHostDB() {
 		return hostDB;
 	}
 
@@ -49,7 +49,7 @@ public class GetUserAction extends ActionSupport {
 
 	public void setPort(int port) {
 		this.port = port;
-	}
+	}*/
 
 
 	public String getUsername() {
@@ -62,8 +62,8 @@ public class GetUserAction extends ActionSupport {
 
 	@Override
 	public String execute() throws Exception {
-		MongoClient m = new MongoClient(hostDB, port);
-		db = m.getDB(Global.DB_TFG);
+		//MongoClient m = new MongoClient(hostDB, port);
+		//db = m.getDB(Global.DB_TFG);
 		DBCollection coll = db.getCollection(Global.C_USERS);
 		coll.setObjectClass(User.class);
 		BasicDBObject q = new BasicDBObject(Global.A_USERNAME, username);

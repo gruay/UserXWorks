@@ -1,27 +1,24 @@
 package tfg;
 
 import com.mongodb.BasicDBObject;
-import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.MongoClient;
-import com.opensymphony.xwork2.ActionSupport;
 
-public class SetUserAction extends ActionSupport {
+public class SetUserAction extends DBAction {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private String hostDB;
-	private int port;
-	private DB db;
+	//private String hostDB;
+	//private int port;
 	private User user;
 	
 	public void validate() {
 		// TODO: falta fer el mètode de validar
 	}
 	
-	public String getHostDB() {
+	/*public String getHostDB() {
 		return hostDB;
 	}
 
@@ -38,7 +35,7 @@ public class SetUserAction extends ActionSupport {
 
 	public void setPort(int port) {
 		this.port = port;
-	}
+	}*/
 
 
 	public User getUser() {
@@ -52,8 +49,8 @@ public class SetUserAction extends ActionSupport {
 
 	@Override
 	public String execute() throws Exception {
-		MongoClient m = new MongoClient(hostDB, port);
-		db = m.getDB(Global.DB_TFG);
+		//MongoClient m = new MongoClient(hostDB, port);
+		//db = m.getDB(Global.DB_TFG);
 		DBCollection coll = db.getCollection(Global.C_USERS);
 		coll.setObjectClass(User.class);
 		BasicDBObject q = new BasicDBObject(Global.A_USERNAME, user.getUsername());
