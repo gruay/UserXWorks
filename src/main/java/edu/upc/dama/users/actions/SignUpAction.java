@@ -21,7 +21,7 @@ public class SignUpAction extends ActionSupport implements MongoDBAware {
 	private String username;
 	private String password;
 	
-	public void validate() {
+	public void validate() { //què hauria de posar si el validate falla? És que ho necessito saber per al jUnit
 		if (username.length() == 0) {
 			addFieldError("username", "Username is required");
 		} 
