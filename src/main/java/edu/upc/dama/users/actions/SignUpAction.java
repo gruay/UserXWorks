@@ -23,10 +23,15 @@ public class SignUpAction extends ActionSupport implements MongoDBAware {
 	
 	public void validate() { //què hauria de posar si el validate falla? És que ho necessito saber per al jUnit
 		if (username.length() == 0) {
-			addFieldError("username", "Username is required");
+			//el validate peta
 		} 
 		if (password.length() == 0) {
-			addFieldError("password", "Password is required");
+			//el validate peta
+		}
+		DBCollection coll = db.getCollection(Global.C_USERS);
+		BasicDBObject q = new BasicDBObject(Global.A_USERNAME, username);
+		if (coll.find(q).hasNext()) {
+			//el validate peta
 		}
 	}
 	
@@ -72,15 +77,7 @@ public class SignUpAction extends ActionSupport implements MongoDBAware {
 
 	@Override
 	public String execute() throws Exception {
-		//MongoClient m = new MongoClient(hostDB, port);
-		//db = m.getDB(Global.DB_TFG);
 		DBCollection coll = db.getCollection(Global.C_USERS);
-		coll.setObjectClass(User.class);
-		BasicDBObject q = new BasicDBObject(Global.A_USERNAME, username);
-		if (coll.find(q).hasNext()) {
-			addActionError("Ja existeix un usuari amb aquest nom.");
-			return "error";
-		}
 		coll.insert(new BasicDBObject(Global.A_USERNAME, username).append(Global.A_PASSWORD, password).append(Global.A_ACTIVE, true));
 		return "success";
 	}
