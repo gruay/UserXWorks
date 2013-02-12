@@ -93,6 +93,11 @@ public class SignUpActionTest {
 		tester.setUsername(username); //que no existeixi
 		tester.setPassword("patata");
 		tester.setDb(db);
+		try {
+			tester.execute();
+		} catch (Exception e) {
+			throw new RuntimeException("Falla l'execute");
+		}
 		DBCollection coll = db.getCollection(Global.C_USERS);
 		BasicDBObject q = new BasicDBObject(Global.A_USERNAME, username);
 		assertTrue(coll.find(q).hasNext());

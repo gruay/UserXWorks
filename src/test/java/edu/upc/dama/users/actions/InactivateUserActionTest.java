@@ -8,10 +8,13 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
+import com.mongodb.DBCollection;
 import com.mongodb.MongoClient;
 
 import edu.upc.dama.users.model.Global;
+import edu.upc.dama.users.model.User;
 
 public class InactivateUserActionTest {
 
@@ -35,9 +38,22 @@ public class InactivateUserActionTest {
 
 	@Test
 	public void testValidate() {
-		fail("Not yet implemented");
+		InactivateUserAction tester = new InactivateUserAction();
+		tester.setUsername("david"); //que existeixi
+		tester.setDb(db);
+		tester.validate();
+		assertTrue(true);
 	}
 
+	@Test
+	public void testValidateUserDoesNotExist() {
+		InactivateUserAction tester = new InactivateUserAction();
+		tester.setUsername("david1991"); //que no existeixi
+		tester.setDb(db);
+		tester.validate();
+		//Hauria de mirar que petés
+	}
+	
 	@Test
 	public void testGetUsername() {
 		InactivateUserAction tester = new InactivateUserAction();
@@ -56,7 +72,18 @@ public class InactivateUserActionTest {
 
 	@Test
 	public void testExecute() {
-		fail("Not yet implemented");
+		InactivateUserAction tester = new InactivateUserAction();
+		tester.setUsername("david"); //que existeixi 
+		tester.setDb(db);
+		try {
+			tester.execute();
+		} catch (Exception e) {
+			throw new RuntimeException("Falla l'execute");
+		}
+		DBCollection coll = db.getCollection(Global.C_USERS);
+		BasicDBObject q = new BasicDBObject(Global.A_USERNAME, "david");
+		User usr = (User) coll.find(q).next();
+		assertTrue(!usr.isActive());
 	}
 
 	@Test
