@@ -21,7 +21,19 @@ public class InactivateUserAction extends ActionSupport implements MongoDBAware 
 	private String username;
 	
 	public void validate() {
-		// TODO: falta fer el mètode de validar
+		if (username.length() == 0) {
+			//validate failed
+		}
+		DBCollection coll = db.getCollection(Global.C_USERS);
+		coll.setObjectClass(User.class);
+		BasicDBObject q = new BasicDBObject(Global.A_USERNAME, username);
+		if (!coll.find(q).hasNext()) {
+			//validate failed
+		}
+		User usr = (User) coll.find(q).next();
+		if (!usr.isActive()) {
+			//validate failed
+		}
 	}
 	
 	/*public String getHostDB() {
@@ -58,10 +70,6 @@ public class InactivateUserAction extends ActionSupport implements MongoDBAware 
 		DBCollection coll = db.getCollection(Global.C_USERS);
 		coll.setObjectClass(User.class);
 		BasicDBObject q = new BasicDBObject(Global.A_USERNAME, username);
-		if (!coll.find(q).hasNext()) {
-			addActionError("No existeix l'usuari");
-			return "error";
-		}
 		User usr = (User) coll.find(q).next();
 		usr.setActive(false);
 		coll.save(usr);
