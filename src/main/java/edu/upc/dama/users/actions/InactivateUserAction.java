@@ -11,50 +11,25 @@ import edu.upc.dama.users.model.User;
 
 public class InactivateUserAction extends ActionSupport implements MongoDBAware {
 
-	/**
-	 *  Fer una que sigui inhabilitar
-	 */
 	private static final long serialVersionUID = 1L;
-	/*private String hostDB;
-	private int port;*/
 	private DB db;
 	private String username;
 	
 	public void validate() {
 		if (username.length() == 0) {
-			//validate failed
+			addActionError("Username is empty");
 		}
 		DBCollection coll = db.getCollection(Global.C_USERS);
 		coll.setObjectClass(User.class);
 		BasicDBObject q = new BasicDBObject(Global.A_USERNAME, username);
 		if (!coll.find(q).hasNext()) {
-			//validate failed
+			addActionError("The user doesn't exist");
 		}
 		User usr = (User) coll.find(q).next();
 		if (!usr.isActive()) {
-			//validate failed
+			addActionError("The user is already inactive");
 		}
 	}
-	
-	/*public String getHostDB() {
-		return hostDB;
-	}
-
-
-	public void setHostDB(String hostDB) {
-		this.hostDB = hostDB;
-	}
-
-
-	public int getPort() {
-		return port;
-	}
-
-
-	public void setPort(int port) {
-		this.port = port;
-	}*/
-
 
 	public String getUsername() {
 		return username;

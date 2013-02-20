@@ -7,74 +7,44 @@ import com.opensymphony.xwork2.ActionSupport;
 
 import edu.upc.dama.mongodb.MongoDBAware;
 import edu.upc.dama.users.model.Global;
-import edu.upc.dama.users.model.User;
 
 public class SignUpAction extends ActionSupport implements MongoDBAware {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
-	/*private String hostDB;
-	private int port;*/
 	private DB db;
 	private String username;
 	private String password;
 	
-	public void validate() { //què hauria de posar si el validate falla? És que ho necessito saber per al jUnit
+	public void validate() {
 		if (username.length() == 0) {
-			//el validate peta
+			addActionError("Username is empty");
 		} 
 		if (password.length() == 0) {
-			//el validate peta
+			addActionError("Password is empty");
 		}
 		DBCollection coll = db.getCollection(Global.C_USERS);
 		BasicDBObject q = new BasicDBObject(Global.A_USERNAME, username);
 		if (coll.find(q).hasNext()) {
-			//el validate peta
+			addActionError("The username already exists");
 		}
 	}
-	
-	/*public String getHostDB() {
-		return hostDB;
-	}
-
-
-	public void setHostDB(String hostDB) {
-		this.hostDB = hostDB;
-	}
-
-
-	public int getPort() {
-		return port;
-	}
-
-
-	public void setPort(int port) {
-		this.port = port;
-	}*/
-
 
 	public String getUsername() {
 		return username;
 	}
 
-
 	public void setUsername(String username) {
 		this.username = username;
 	}
-
 
 	public String getPassword() {
 		return password;
 	}
 
-
 	public void setPassword(String password) {
 		this.password = password;
 	}
 	
-
 	@Override
 	public String execute() throws Exception {
 		DBCollection coll = db.getCollection(Global.C_USERS);

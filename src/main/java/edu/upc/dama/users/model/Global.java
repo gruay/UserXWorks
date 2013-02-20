@@ -3,7 +3,10 @@ package edu.upc.dama.users.model;
 public class Global {
 	public static String DB_TFG = "TFG";
 	public static String C_USERS = "users";
+	public static String C_COUNTRIES = "countries";
 	public static String A_USERNAME = "username";
+	public static String A_COUNTRYCODE = "countryCode";
+	public static String A_COUNTRYNAME = "countryName";
 	public static String A_PASSWORD = "password";
 	public static String A_TWITTER = "twitter";
 	public static String A_NOM = "nom";

@@ -11,12 +11,7 @@ import edu.upc.dama.users.model.User;
 
 public class GetUserAction extends ActionSupport implements MongoDBAware{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
-	/*private String hostDB;
-	private int port;*/
 	private DB db;
 	private String username;
 	private User user;
@@ -31,29 +26,15 @@ public class GetUserAction extends ActionSupport implements MongoDBAware{
 
 	public void validate() {
 		if (username.length() == 0) {
-			addFieldError("username", "Username is required");
+			addActionError("Username is empty");
 		} 
+		DBCollection coll = db.getCollection(Global.C_USERS);
+		coll.setObjectClass(User.class);
+		BasicDBObject q = new BasicDBObject(Global.A_USERNAME, username);
+		if (!coll.find(q).hasNext()) {
+			addActionError("The user doesn't exist");
+		}
 	}
-	
-	/*public String getHostDB() {
-		return hostDB;
-	}
-
-
-	public void setHostDB(String hostDB) {
-		this.hostDB = hostDB;
-	}
-
-
-	public int getPort() {
-		return port;
-	}
-
-
-	public void setPort(int port) {
-		this.port = port;
-	}*/
-
 
 	public String getUsername() {
 		return username;
@@ -65,15 +46,9 @@ public class GetUserAction extends ActionSupport implements MongoDBAware{
 
 	@Override
 	public String execute() throws Exception {
-		//MongoClient m = new MongoClient(hostDB, port);
-		//db = m.getDB(Global.DB_TFG);
 		DBCollection coll = db.getCollection(Global.C_USERS);
 		coll.setObjectClass(User.class);
 		BasicDBObject q = new BasicDBObject(Global.A_USERNAME, username);
-		if (!coll.find(q).hasNext()) {
-			addActionError("No existeix cap usuari amb aquest username");
-			return "error";
-		}
 		user = (User) coll.find(q).next();
 		return "success";
 	}

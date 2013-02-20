@@ -133,6 +133,10 @@ public class User implements DBObject{
 		this.projectes = projectes;
 	}
 	
+	public User() {
+		super();
+	}
+
 	public boolean containsField(String field) {
 		return (field.equals(Global.A_DATANAIX) || field.equals(Global.A_FACEBOOK) || field.equals(Global.A_ID) || field.equals(Global.A_IMATGE) || field.equals(Global.A_LINKEDIN) || field.equals(Global.A_NOM) || field.equals(Global.A_PAIS) || field.equals(Global.A_PARTNERS) || field.equals(Global.A_PASSWORD) || field.equals(Global.A_PROJECTES) || field.equals(Global.A_SEXE) || field.equals(Global.A_TWITTER) || field.equals(Global.A_USERNAME));
 	}

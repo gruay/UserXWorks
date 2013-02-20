@@ -39,10 +39,10 @@ public class InactivateUserActionTest {
 	@Test
 	public void testValidate() {
 		InactivateUserAction tester = new InactivateUserAction();
-		tester.setUsername("david"); //que existeixi
+		tester.setUsername("david"); //que existeixi i sigui inactiu
 		tester.setDb(db);
 		tester.validate();
-		assertTrue(true);
+		assertTrue(tester.getActionErrors().isEmpty());
 	}
 
 	@Test
@@ -51,7 +51,7 @@ public class InactivateUserActionTest {
 		tester.setUsername("david1991"); //que no existeixi
 		tester.setDb(db);
 		tester.validate();
-		//Hauria de mirar que petés
+		assertFalse(tester.getActionErrors().isEmpty());
 	}
 	
 	@Test

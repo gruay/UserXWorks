@@ -42,7 +42,7 @@ public class SignUpActionTest {
 		tester.setUsername("david1991"); //que no existeixi
 		tester.setDb(db);
 		tester.validate();
-		assertTrue(true);
+		assertTrue(tester.getActionErrors().isEmpty());
 	}
 
 	@Test
@@ -52,6 +52,7 @@ public class SignUpActionTest {
 		tester.setUsername("david"); //que existeixi
 		tester.setDb(db);
 		tester.validate();
+		assertFalse(tester.getActionErrors().isEmpty());
 	}
 	
 	@Test
