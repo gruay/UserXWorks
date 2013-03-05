@@ -10,6 +10,10 @@ import edu.upc.dama.users.model.Global;
 
 public class SignUpAction extends ActionSupport implements MongoDBAware {
 
+	
+	/**
+	 * Aquí ja va bé només amb l'username i la contrasenya o hauria de passar-li tota la informació?
+	 */
 	private static final long serialVersionUID = 1L;
 	private DB db;
 	private String username;

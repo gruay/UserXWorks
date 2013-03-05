@@ -78,8 +78,7 @@ public class MongoDBManagerInterceptor implements Interceptor {
 			MongoDBAware dba = (MongoDBAware) inv.getAction();
 			dba.setDb(db);
 		}
-		String result = inv.invoke();
-		return result;
+		return inv.invoke();
 	}
 
 }

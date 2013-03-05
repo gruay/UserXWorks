@@ -1,6 +1,8 @@
 package edu.upc.dama.users.actions;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.net.UnknownHostException;
 
@@ -8,9 +10,7 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
-import com.mongodb.DBCollection;
 import com.mongodb.MongoClient;
 
 import edu.upc.dama.users.model.Global;
@@ -39,7 +39,7 @@ public class GetUserActionTest {
 	@Test
 	public void testValidate() {
 		GetUserAction tester = new GetUserAction();
-		tester.setUsername("david"); //que existeixi i sigui inactiu
+		tester.setUsername("patata@tubercle.com"); //que existeixi i sigui inactiu
 		tester.setDb(db);
 		tester.validate();
 		assertTrue(tester.getActionErrors().isEmpty());
@@ -73,7 +73,7 @@ public class GetUserActionTest {
 	@Test
 	public void testExecute() {
 		GetUserAction tester = new GetUserAction();
-		tester.setUsername("david"); //que existeixi 
+		tester.setUsername("patata@tubercle.com"); //que existeixi 
 		tester.setDb(db);
 		try {
 			tester.execute();
@@ -81,7 +81,7 @@ public class GetUserActionTest {
 			throw new RuntimeException("Falla l'execute");
 		}
 		User usr = tester.getUser();
-		assertTrue(usr.getUsername().equals("david"));
+		assertTrue(usr.getUsername().equals("patata@tubercle.com"));
 	}
 
 	@Test

@@ -14,7 +14,7 @@ import org.bson.types.ObjectId;
 import com.mongodb.DBObject;
 
 
-public class User implements DBObject{
+public class User implements DBObject {
 
 	private ObjectId _id;
 	private String nom;
@@ -30,6 +30,15 @@ public class User implements DBObject{
 	private LinkedList<String> partners;
 	private LinkedList<String> projectes;
 	private boolean active;
+	private String google;
+	
+	public String getGoogle() {
+		return google;
+	}
+	
+	public void setGoogle(String google) {
+		this.google = google;
+	}
 	
 	public ObjectId getId() {
 		return this._id;
@@ -117,7 +126,7 @@ public class User implements DBObject{
 	public User(String nom, String username, String imatge, String twitter,
 			String facebook, String linkedin, String password, Date dataNaix,
 			String sexe, String pais, LinkedList<String> partners,
-			LinkedList<String> projectes) {
+			LinkedList<String> projectes, boolean active, String google) {
 		super();
 		this.nom = nom;
 		this.username = username;
@@ -131,14 +140,17 @@ public class User implements DBObject{
 		this.pais = pais;
 		this.partners = partners;
 		this.projectes = projectes;
+		this.active = active;
+		this.google = google;
 	}
 	
 	public User() {
 		super();
+		this.active = true;
 	}
 
 	public boolean containsField(String field) {
-		return (field.equals(Global.A_DATANAIX) || field.equals(Global.A_FACEBOOK) || field.equals(Global.A_ID) || field.equals(Global.A_IMATGE) || field.equals(Global.A_LINKEDIN) || field.equals(Global.A_NOM) || field.equals(Global.A_PAIS) || field.equals(Global.A_PARTNERS) || field.equals(Global.A_PASSWORD) || field.equals(Global.A_PROJECTES) || field.equals(Global.A_SEXE) || field.equals(Global.A_TWITTER) || field.equals(Global.A_USERNAME));
+		return (field.equals(Global.A_DATANAIX) || field.equals(Global.A_FACEBOOK) || field.equals(Global.A_ID) || field.equals(Global.A_IMATGE) || field.equals(Global.A_LINKEDIN) || field.equals(Global.A_NOM) || field.equals(Global.A_PAIS) || field.equals(Global.A_PARTNERS) || field.equals(Global.A_PASSWORD) || field.equals(Global.A_PROJECTES) || field.equals(Global.A_SEXE) || field.equals(Global.A_TWITTER) || field.equals(Global.A_USERNAME) || field.equals(Global.A_ACTIVE) || field.equals(Global.A_GOOGLE));
 	}
 	
 	@Deprecated
@@ -160,6 +172,8 @@ public class User implements DBObject{
 		if (field.equals(Global.A_TWITTER)) return this.twitter;
 		if (field.equals(Global.A_USERNAME)) return this.username;
 		if (field.equals(Global.A_ID)) return this._id;
+		if (field.equals(Global.A_ACTIVE)) return this.active;
+		if (field.equals(Global.A_GOOGLE)) return this.google;
 		return null;
 	}
 	
@@ -178,6 +192,8 @@ public class User implements DBObject{
 		set.add(Global.A_SEXE);
 		set.add(Global.A_TWITTER);
 		set.add(Global.A_USERNAME);
+		set.add(Global.A_ACTIVE);
+		set.add(Global.A_GOOGLE);
 		return set;
 	}
 	@SuppressWarnings("unchecked")
@@ -234,6 +250,14 @@ public class User implements DBObject{
 		if (field.equals(Global.A_ID)) {
 			this._id = (ObjectId) object;
 			return object;
+		}		
+		/*if (field.equals(Global.A_ACTIVE)) {
+			this.active = (boolean) object;
+			return object;
+		}*/ //TODO		
+		if (field.equals(Global.A_GOOGLE)) {
+			this.google = (String) object;
+			return object;
 		}
 		return null;
 	}
@@ -268,6 +292,8 @@ public class User implements DBObject{
 		if (this.sexe != null) map.put(Global.A_SEXE, this.sexe);
 		if (this.twitter != null) map.put(Global.A_TWITTER, this.twitter);
 		if (this.username != null) map.put(Global.A_USERNAME, this.username);
+		//if (this.active != null) map.put(Global.A_ACTIVE, this.active); //TODO
+		if (this.google != null) map.put(Global.A_GOOGLE, this.google);
 		return map;
 	}
 	
